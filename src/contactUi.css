@@ -1,0 +1,16 @@
+.header {
+  text-align: center;
+}
+.contact-container {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.name {
+  color: black;
+  transition: color 0.3s ease;
+}
+.name:hover {
+  color: blueviolet;
+  cursor: pointer;
+}

@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react"
+import ContactUl from "./ContactUl"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [contactsList, setContactsList] = useState([])
+
+  const API_URL_USERS = "https://jsonplaceholder.typicode.com/users"
+
+  useEffect(() => {
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await fetch(API_URL_USERS)
+        if (!response.ok) {
+          throw new Error("Failed to fetch data")
+        }
+        const json = await response.json()
+        setContactsList(json)
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
+    }
+
+    fetchDataFromAPI()
+  }, [])
 
   return (
-    <>
+    <div>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1 className="header">Contact List</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>
+        <ContactUl contactsList={contactsList} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
